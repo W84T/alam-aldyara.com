@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->json('title')->nullable();
             $table->json('description')->nullable();
-            $table->json('images');
+            $table->string('hero_image')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

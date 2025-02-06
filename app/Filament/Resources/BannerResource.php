@@ -49,8 +49,19 @@ class BannerResource extends Resource
                 ]),
                 Group::make()->schema([
                     Section::make(__('form.banner_images'))->schema([
-                        FileUpload::make('images')->label(__('form.main_image'))
+                        FileUpload::make('hero_image')->label(__('form.main_image'))
                             ->required()
+                            ->optimize('webp')
+                            ->directory('hero_banners')
+                            ->imageEditorAspectRatios([
+                                '16:9',
+                                '4:3',
+                                '1:1',
+                            ])
+                            ->imageEditor(),
+                        FileUpload::make('image')->label(__('form.main_image'))
+                            ->required()
+                            ->optimize('webp')
                             ->directory('banners')
                             ->imageEditorAspectRatios([
                                 '16:9',
