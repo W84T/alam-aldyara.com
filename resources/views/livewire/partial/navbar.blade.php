@@ -7,10 +7,9 @@
         </span>
         </a>
         <div class="sm:order-3 flex items-center gap-x-2">
-            <button type="button"
-                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
-                Button
-            </button>
+            <div class="hidden  lg:block">
+                @livewire('language-switcher')
+            </div>
 
             <button type="button"
                     class="sm:hidden hs-collapse-toggle relative py-2 px-3 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
@@ -32,6 +31,9 @@
             <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
                 <x-nav-link href="{{ route('home') }}">{{ __('front.home') }}</x-nav-link>
                 <x-nav-link href="{{ route('products') }}">{{ __('front.products') }}</x-nav-link>
+                <div class="flex md:hidden sm:block gap-3">
+                    @livewire('language-switcher')
+                </div>
             </div>
         </div>
 

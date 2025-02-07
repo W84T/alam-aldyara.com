@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Homepage::class)->name('home');
 Route::get('/products', ProductsPage::class)->name('products');
+
