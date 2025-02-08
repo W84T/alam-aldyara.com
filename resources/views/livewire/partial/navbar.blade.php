@@ -7,8 +7,9 @@
         </span>
         </a>
         <div class="sm:order-3 flex items-center gap-x-2">
-            <div class="hidden  lg:block">
+            <div class="hidden  lg:flex lg:items-center lg:gap-2">
                 @livewire('language-switcher')
+                @livewire('currency-switcher')
             </div>
 
             <button type="button"

@@ -19,7 +19,8 @@
         "lara-zeus/qr": "^1.1",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.4"
+        "livewire/livewire": "^3.4",
+        "mgcodeur/laravel-currency-converter": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

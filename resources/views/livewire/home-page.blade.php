@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-9 md:px-24">
+<div class="flex flex-col gap-9 md:px-24 md:my-8">
     <div>
         <div class="swiper swiper-banner">
             <div class="swiper-wrapper">
@@ -30,7 +30,12 @@
     </div>
 
 
-    <div class="relative"> <!-- New parent wrapper -->
+    <div class="relative">
+        <div class="flex items-center flex-col gap-1 mb-2">
+            <h1 class="text-center text-2xl font-semibold">
+                {{__("front.category")}}
+            </h1>
+        </div>
         <div class="swiper swiper-category">
             <div class="swiper-wrapper">
                 @foreach($categories as $category)
@@ -40,6 +45,51 @@
                         <img class="h-full w-full object-cover" src="{{url('storage', $category->image)}}"
                              alt="{{$category->name}}">
                     </div>
+                @endforeach
+            </div>
+        </div>
+        <button
+            class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+            <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+        </button>
+
+        <button
+            class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+            <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+        </button>
+    </div>
+
+    <div class="relative">
+        <h1 class="mb-2 text-2xl font-semibold">
+            {{__('front.featured')}}
+        </h1>
+        <div class="swiper swiper-product">
+            <div class="swiper-wrapper">
+                @foreach($products as $product)
+                    <x-product-card :product="$product" :currency="$currency"/>
+                @endforeach
+            </div>
+        </div>
+        <button
+            class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+            <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+        </button>
+
+        <button
+            class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+            <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+        </button>
+    </div>
+
+
+    <div class="relative">
+        <h1 class="mb-2 text-2xl font-semibold">
+            {{__('front.discounts')}}
+        </h1>
+        <div class="swiper swiper-product">
+            <div class="swiper-wrapper">
+                @foreach($discountProducts as $product)
+                    <x-product-card :product="$product" :currency="$currency"/>
                 @endforeach
             </div>
         </div>
