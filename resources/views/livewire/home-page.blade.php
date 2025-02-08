@@ -31,11 +31,23 @@
 
 
     <div class="relative">
-        <div class="flex items-center flex-col gap-1 mb-2">
-            <h1 class="text-center text-2xl font-semibold">
+
+        <div class="flex justify-between items-start md:items-center">
+            <h1 class="text-start w-full md:text-center text-2xl font-semibold mb-2 mx-2">
                 {{__("front.category")}}
             </h1>
+            <div class="md:hidden flex flex-row-reverse items-center gap-2">
+                <button
+                    class="swiper-button-next bg-white py-1 px-2  rounded text-white hover:bg-white z-[10] shadow">
+                    <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+                </button>
+                <button
+                    class="swiper-button-prev bg-white py-1 px-2 rounded text-white hover:bg-white z-[10] shadow">
+                    <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+                </button>
+            </div>
         </div>
+
         <div class="swiper swiper-category">
             <div class="swiper-wrapper">
                 @foreach($categories as $category)
@@ -48,21 +60,35 @@
                 @endforeach
             </div>
         </div>
-        <button
-            class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
-            <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
-        </button>
+        <div class="hidden md:block">
+            <button
+                class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+                <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+            </button>
 
-        <button
-            class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
-            <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
-        </button>
+            <button
+                class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+                <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+            </button>
+        </div>
     </div>
 
     <div class="relative">
-        <h1 class="mb-2 text-2xl font-semibold">
-            {{__('front.featured')}}
-        </h1>
+        <div class="flex justify-between items-start">
+            <h1 class="text-start md:text-center text-2xl font-semibold mb-2 mx-2">
+                {{__('front.featured')}}
+            </h1>
+            <div class="md:hidden flex flex-row-reverse items-center gap-2">
+                <button
+                    class="swiper-button-next bg-white py-1 px-2  rounded text-white hover:bg-white z-[10] shadow">
+                    <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+                </button>
+                <button
+                    class="swiper-button-prev bg-white py-1 px-2 rounded text-white hover:bg-white z-[10] shadow">
+                    <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+                </button>
+            </div>
+        </div>
         <div class="swiper swiper-product">
             <div class="swiper-wrapper">
                 @foreach($products as $product)
@@ -70,22 +96,37 @@
                 @endforeach
             </div>
         </div>
-        <button
-            class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
-            <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
-        </button>
+        <div class="hidden md:block">
+            <button
+                class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+                <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+            </button>
 
-        <button
-            class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
-            <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
-        </button>
+            <button
+                class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+                <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+            </button>
+        </div>
     </div>
 
 
     <div class="relative">
-        <h1 class="mb-2 text-2xl font-semibold">
-            {{__('front.discounts')}}
-        </h1>
+
+        <div class="flex justify-between items-start">
+            <h1 class="text-start md:text-center text-2xl font-semibold mb-2 mx-2">
+                {{__('front.discounts')}}
+            </h1>
+            <div class="md:hidden flex flex-row-reverse items-center gap-2">
+                <button
+                    class="swiper-button-next bg-white py-1 px-2  rounded text-white hover:bg-white z-[10] shadow">
+                    <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+                </button>
+                <button
+                    class="swiper-button-prev bg-white py-1 px-2 rounded text-white hover:bg-white z-[10] shadow">
+                    <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+                </button>
+            </div>
+        </div>
         <div class="swiper swiper-product">
             <div class="swiper-wrapper">
                 @foreach($discountProducts as $product)
@@ -93,15 +134,17 @@
                 @endforeach
             </div>
         </div>
-        <button
-            class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
-            <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
-        </button>
+        <div class="hidden md:block">
+            <button
+                class="swiper-button-prev absolute top-1/2 -left-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+                <x-heroicon-o-chevron-left class="w-6 h-6 text-black"/>
+            </button>
 
-        <button
-            class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
-            <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
-        </button>
+            <button
+                class="swiper-button-next absolute top-1/2 -right-6 -translate-y-1/2 bg-white p-2 rounded-full text-white hover:bg-white z-[10] shadow">
+                <x-heroicon-o-chevron-right class="w-6 h-6 text-black"/>
+            </button>
+        </div>
     </div>
 
 
