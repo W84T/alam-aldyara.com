@@ -8,8 +8,14 @@
         </a>
         <div class="sm:order-3 flex items-center gap-x-2">
             <div class="hidden  lg:flex lg:items-center lg:gap-2">
-                @livewire('language-switcher')
-                @livewire('currency-switcher')
+                <a href="/" class="relative">
+                    <div
+                        class="absolute -start-1 h-3 w-3 text-white font-bold flex items-center justify-center -bottom-1 bg-blue-500 rounded-full">
+
+                    </div>
+                    <x-heroicon-o-shopping-bag class="w-6 h-6"/>
+                </a>
+
             </div>
 
             <button type="button"
@@ -30,10 +36,11 @@
              class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2"
              aria-labelledby="hs-navbar-alignment-collapse">
             <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-                <x-nav-link href="{{ route('home') }}">{{ __('front.home') }}</x-nav-link>
-                <x-nav-link href="{{ route('products') }}">{{ __('front.products') }}</x-nav-link>
+                <a class="font-medium focus:outline-none {{request()->is('/') ? 'text-blue-500' : 'text-gray-600'}}  hover:text-gray-400"
+                   href="{{ route('home') }}" wire:navigate>{{ __('front.home') }}</a>
+                <a class="font-medium focus:outline-none {{request()->is('products') ? 'text-blue-500' : 'text-gray-600'}}  hover:text-gray-400"
+                   href="{{ route('products') }}" wire:navigate>{{ __('front.products') }}</a>
                 <div class="flex md:hidden sm:block gap-3">
-                    @livewire('language-switcher')
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -17,6 +18,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -50,7 +52,11 @@ class CategoryResource extends Resource
                             ->disabled()
                             ->dehydrated()
                             ->required()
-                            ->unique(Category::class, 'slug', ignoreRecord: true)
+                            ->unique(Category::class, 'slug', ignoreRecord: true),
+                        Select::make('parent_id')
+                        ->options(function (){
+                            return Category::query()->get()->pluck('name', 'id')->toArray();
+                        })
                     ]),
                     FileUpload::make('image')
                         ->image()
@@ -70,6 +76,7 @@ class CategoryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
             ->columns([
                 ImageColumn::make('image')->circular()->label(__('form.logo')),
 
@@ -97,6 +104,11 @@ class CategoryResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->groups([
+                Tables\Grouping\Group::make('parent.name') // Group by parent name
+                ->label(__('form.parent')) // Set a label for the group
+                ->collapsible(), // Make it collapsible
             ]);
     }
 

@@ -16,6 +16,7 @@
                 $table->json('name');
                 $table->string('slug')->unique();
                 $table->string('image')->nullable();
+                $table->string('parent_id')->nullable();
                 $table->boolean('is_active')->default(true);
                 $table->timestamps();
             });

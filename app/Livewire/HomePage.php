@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
@@ -12,75 +14,72 @@ use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 class HomePage extends Component
 {
     public $currency;
+    public $exchangeRate;
 
     public function mount()
     {
         // Get saved currency from session or default to USD
-        $this->currency = Session::get('currency', 'USD');
+        $this->currency = Cookie::get('currency', 'USD');
+
+        // Cache the conversion rate for 30 minutes to reduce API calls
+        $this->exchangeRate = Cache::remember("exchange_rate_{$this->currency}", now()->addMinutes(30), function () {
+            return CurrencyConverter::convert(1)
+                ->from('USD')
+                ->to($this->currency)
+                ->get();
+        });
     }
 
     public function render()
     {
-        // Fetch all required products with relationships
+        // Fetch featured products directly from the database
         $products = Product::where('is_featured', 1)
             ->where('is_active', 1)
-            ->whereHas('category', function ($query) {
-                $query->where('is_active', 1);
-            })
-            ->with(['category', 'discounts' => function ($query) {
-                $query->wherePivot('is_active', 1); // Only active discounts
+            ->with(['discounts' => function ($query) {
+                $query->wherePivot('is_active', 1);
             }])
-            ->get()
-            ->map(function ($product) {
-                // Convert price to selected currency
-                $originalPrice = CurrencyConverter::convert($product->price)
-                    ->from('USD')
-                    ->to($this->currency)
-                    ->get();
+            ->take(10)
+            ->get();
 
-                // Default value for discounted price
-                $discountedPrice = null;
+        // Convert product prices using the exchange rate
+        $products->transform(function ($product) {
+            // Convert original price
+            $originalPrice = $product->price * $this->exchangeRate;
 
-                // Check if there's an active discount
-                $discount = $product->discounts->first();
-                if ($discount) {
-                    if ($discount->discount_type === 'fixed') {
-                        $discountedPrice = $product->price - $discount->value;
-                    } elseif ($discount->discount_type === 'percentage') {
-                        $discountAmount = ($discount->value / 100) * $product->price;
-                        $discountedPrice = $product->price - $discountAmount;
-                    }
+            // Calculate discounted price if applicable
+            $discountedPrice = null;
+            if ($discount = $product->discounts->first()) {
+                $discountedPrice = match ($discount->discount_type) {
+                    'fixed' => ($product->price - $discount->value),
+                    'percentage' => ($product->price - ($discount->value / 100) * $product->price),
+                    default => null
+                };
 
-                    // Convert discounted price
-                    if ($discountedPrice !== null) {
-                        $discountedPrice = CurrencyConverter::convert($discountedPrice)
-                            ->from('USD')
-                            ->to($this->currency)
-                            ->get();
-                    }
+                // Convert discounted price
+                if ($discountedPrice !== null) {
+                    $discountedPrice *= $this->exchangeRate;
                 }
+            }
 
-                // Add calculated prices to product object
-                $product->original_price = $originalPrice;
-                $product->discounted_price = $discountedPrice;
+            // Round prices for cleaner display
+            $product->original_price = round($originalPrice, 2);
+            $product->discounted_price = $discountedPrice !== null ? round($discountedPrice, 2) : null;
 
-                return $product;
-            });
+            return $product;
+        });
 
-        // Filter discounted products from the already fetched collection
+        // Filter only discounted products
         $discountProducts = $products->filter(fn($product) => $product->discounted_price !== null);
 
-        // Fetch categories and banners
-        $categories = Category::where('is_active', 1)->get();
+        // Fetch categories and banners directly from the database
+        $categories = Category::where('is_active', 1)->where('parent_id', null)->take(10)->get();
         $banners = Banner::where('is_active', 1)->get();
 
         return view('livewire.home-page', [
             'categories' => $categories,
             'banners' => $banners,
             'products' => $products,
-            'discountProducts' => $discountProducts, // Pass only discounted products
+            'discountProducts' => $discountProducts,
         ]);
     }
-
-
 }

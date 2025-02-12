@@ -109,7 +109,7 @@ class ProductResource extends Resource
                     ->sortable(),
 
 
-                TextColumn::make('name')->sortable(),
+
 
                 TextColumn::make('price')
                     ->label(__('form.product_price'))

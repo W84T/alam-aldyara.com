@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -9,11 +10,11 @@ class CurrencySwitcher extends Component
 {
   public $currency;
   public function mount(){
-      $this->currency = Session::get('currency', 'USD');
+      $this->currency = Cookie::get('currency', 'USD');
   }
 
   public function switchCurrency($curr){
-      Session::put('currency', $curr);
+      Cookie::queue('currency', $curr, 525600);
       $this->currency = $curr;
 
       return redirect(request()->header('Referer') ?? route('home'));

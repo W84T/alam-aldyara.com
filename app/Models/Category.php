@@ -10,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 class Category extends Model
 {
     use HasFactory, HasTranslations;
-    protected $fillable = ['name', 'slug', 'image', 'is_active'];
+    protected $fillable = ['name', 'parent_id', 'slug', 'image', 'is_active'];
 
     public array $translatable = ['name'];
 
@@ -29,6 +29,9 @@ class Category extends Model
                     Storage::disk('public')->delete($originalImage);
                 }
             }
+            if($category->isDirty('is_active')){
+                Product::where('category_id', $category->id)->update(['is_active' => $category->is_active]);
+            }
         });
     }
     public function discounts()
@@ -36,6 +39,14 @@ class Category extends Model
         return $this->belongsToMany(Discount::class, 'discount_categories');
     }
 
+    public function parent(){
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
     public function getActiveDiscountAttribute()
     {
         return $this->discounts()->where('is_active', true)->first();

@@ -15,6 +15,8 @@ export default {
             fontFamily: {
                 sans: ["Poppins", ...defaultTheme.fontFamily.sans], // For English (default)
                 arabic: ["Cairo", "Arial", "sans-serif"], // For Arabic
+                crimson: ["Crimson Pro", ...defaultTheme.fontFamily.sans],
+                IBM: ["IBM Plex Sans Arabic", "Arial", "sans-serif"],
             },
         },
     },

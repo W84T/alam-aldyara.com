@@ -49,21 +49,21 @@ class Product extends Model
         });
 
         // Handle image deletion on record update
-        self::updating(function (Product $product) {
-            if ($product->isDirty('images')) {
-                $originalImages = $product->getOriginal('images');
-                $originalImagesArray = is_string($originalImages) ? json_decode($originalImages, true) : $originalImages;
-
-                $newImages = $product->images; // The updated images array
-                $imagesToDelete = array_diff($originalImagesArray ?? [], $newImages ?? []);
-
-                if (is_array($imagesToDelete)) {
-                    foreach ($imagesToDelete as $image) {
-                        Storage::disk('public')->delete($image);
-                    }
-                }
-            }
-        });
+//        self::updating(function (Product $product) {
+//            if ($product->isDirty('images')) {
+//                $originalImages = $product->getOriginal('images');
+//                $originalImagesArray = is_string($originalImages) ? json_decode($originalImages, true) : $originalImages;
+//
+//                $newImages = $product->images; // The updated images array
+//                $imagesToDelete = array_diff($originalImagesArray ?? [], $newImages ?? []);
+//
+//                if (is_array($imagesToDelete)) {
+//                    foreach ($imagesToDelete as $image) {
+//                        Storage::disk('public')->delete($image);
+//                    }
+//                }
+//            }
+//        });
     }
 
 
