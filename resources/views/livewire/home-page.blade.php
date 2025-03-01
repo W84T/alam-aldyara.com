@@ -99,7 +99,7 @@
                 {{__('front.discounts')}}
             </h1>
         </div>
-        <div class="swiper swiper-product">
+        <div class="swiper swiper-product-discount">
             <div class="swiper-wrapper">
                 @foreach($discountProducts as $product)
                     <x-product-card :product="$product" :currency="$currency"/>

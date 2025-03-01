@@ -100,8 +100,8 @@ class DiscountResource extends Resource
                     ->formatStateUsing(fn($state, $record) => $record->discount_type === 'fixed'
                         ? $state . '$'
                         : $state . '%'),
-                TextColumn::make('applies_to')->sortable()
-                    ->label(__('form.is_active')),
+
+                Tables\Columns\ToggleColumn::make('is_active')->label(__('form.is_active')),
                 TextColumn::make('start_date')->sortable(),
                 TextColumn::make('end_date')->sortable(),
             ])

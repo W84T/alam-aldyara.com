@@ -50,7 +50,6 @@ class ProductsPage extends Component
     {
         // Start building the query
         $productsQuery = Product::select('id', 'name', 'slug', 'price', 'category_id', 'images','is_featured', 'is_active')
-            ->where('is_featured', 1)
             ->where('is_active', 1)
             ->with(['category' => function ($query) {
                 $query->select('id', 'name', 'slug');

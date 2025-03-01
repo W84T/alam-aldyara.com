@@ -2,8 +2,9 @@
 
 return [
     'name' => 'الاسم',
-    'email' => 'الإيميل',
+    'email' => 'البريد الالكتروني',
     'password' => 'كلمة المرور',
+    'confirmPassword' => 'تأكيد كلمة المرور',
     'email_verified_at' => 'تاريخ تأكيد الحساب',
     'brand_name' => 'إسم العلامة التجارية',
     'category_name' => 'إسم الفئة',
@@ -27,7 +28,9 @@ return [
     'status' => 'الحالة',
     'USD' => 'دولار أمريكي',
     'SYR' => 'ليرة سورية',
+    'TRY' => 'ليرة تركية',
     'currency' => 'العملة',
+    'currency_price' => 'سعر الصرف',
     'shipping_method' => 'طريقة الشحن',
     'fedex' => 'فيدكس',
     'ups' => 'يو بي إس',

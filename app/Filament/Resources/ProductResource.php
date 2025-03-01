@@ -29,10 +29,8 @@ use Filament\Tables\Columns\TextColumn\TextColumnSize;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use LaraZeus\Popover\Tables\PopoverColumn;
-use Telegram\Bot\FileUpload\InputFile;
 
 
 function handleMessage(Model $record)
@@ -57,7 +55,7 @@ function sendToTelegram(array $data, Model $record)
             $mediaItem = [
                 'type' => 'photo',
 //                'media' => InputFile::create($fileUrl),
-                'media' =>  'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
+                'media' => 'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
             ];
 
             if ($index === 0) {
@@ -109,12 +107,10 @@ class ProductResource extends Resource
                     ->sortable(),
 
 
-
-
                 TextColumn::make('price')
                     ->label(__('form.product_price'))
                     ->money('USD')
-                    ->formatStateUsing(function($state, $record) {
+                    ->formatStateUsing(function ($state, $record) {
 
                         $activeDiscount = $record->discounts()
                             ->where('discount_products.is_active', true)

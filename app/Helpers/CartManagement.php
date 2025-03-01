@@ -41,6 +41,52 @@ class CartManagement
         return count($cart_items);
     }
 
+    static public function addItemsToCart($product_id, $quantity = 1)
+    {
+        $cart_items = self::getCartItemsFromCookie();
+        $existing_item = Null;
+
+        foreach ($cart_items as $key => $item) {
+            if ($item['product_id'] == $product_id) {
+                $existing_item = $key;
+                break;
+
+            }
+        }
+        if ($existing_item !== null) {
+            $cart_items[$existing_item]['quantity'] = $quantity;
+            $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] * $cart_items[$existing_item]['unit_amount'];
+        }else{
+            $product = Product::where('id', $product_id)->with(['discounts' => function ($query) {
+                $query->wherePivot('is_active', 1);
+            }])->first(['id', 'name', 'price', 'images']);
+
+            if ($discount = $product->discounts->first()) {
+                $discountedPrice = match ($discount->discount_type) {
+                    'fixed' => ($product->price - $discount->value),
+                    'percentage' => ($product->price - ($discount->value / 100) * $product->price),
+                    default => null
+                };
+            }
+            if($product){
+                $cart_items[] = [
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'original_price' => $product->price,
+                    'discount_type' => $discount->discount_type ?? null,
+                    'discount_value' => $discount->value ?? null,
+                    'unit_amount' => $discountedPrice ?? $product->price,
+                    'total_amount' => ($discountedPrice ?? $product->price) * $quantity,
+                    'quantity' => $quantity,
+                    'image' => $product->images[0] ?? null,
+                ];
+            }
+        }
+
+        self::addCartItemToCookie($cart_items);
+        return count($cart_items);
+    }
+
     static public function removeCartItem($product_id){
         $cart_items = self::getCartItemsFromCookie();
 

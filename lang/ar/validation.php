@@ -12,6 +12,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
+    'invalid_email_password' => 'البريد الألكتروني أو كلمة المرور غير صحيحة',
     'indisposable' => 'لا يُسمح بعناوين البريد الإلكتروني التي تستخدم لمرة واحدة',
     'accepted' => 'يجب قبول الحقل :attribute',
     'accepted_if' => 'حقل :attribute يجب قبوله عندما يكون حقل :other بقيمة :value.',

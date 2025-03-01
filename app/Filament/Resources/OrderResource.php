@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
-use App\Models\Address;
 use App\Models\Order;
 use App\Models\Product;
 use Filament\Forms\Components\Group;
@@ -51,24 +50,6 @@ class OrderResource extends Resource
                             ->preload()
                             ->required(),
 
-                        Select::make('payment_method')
-                            ->label(__('form.payment_method'))
-                            ->required()
-                            ->options([
-                                'stripe' => __('form.credit'),
-                                'cod' => __('form.cash'),
-                            ]),
-
-                        Select::make('payment_status')
-                            ->label(__('form.payment_status'))
-                            ->required()
-                            ->options([
-                                'pending' => __('status.pending'),
-                                'paid' => __('status.paid'),
-                                'failed' => __('status.failed'),
-                            ])
-                            ->default('pending'),
-
                         ToggleButtons::make('status')
                             ->label(__('form.status'))
                             ->inline()
@@ -102,17 +83,11 @@ class OrderResource extends Resource
                             ->default('USD')
                             ->options([
                                 'USD' => __('form.USD'),
+                                'TRY' => __('form.TRY'),
                                 'SYR' => __('form.SYR'),
                             ]),
-
-                        Select::make('shipping_method')
-                            ->label(__('form.shipping_method'))
-                            ->required()
-                            ->options([
-                                'fedex' => __('form.fedex'),
-                                'ups' => __('form.ups'),
-                                'dhl' => __('form.dhl'),
-                            ]),
+                        TextInput::make('currency_price')
+                            ->label(__('form.currency_price')),
 
                         Textarea::make('note')
                             ->label(__('form.note'))
@@ -195,26 +170,12 @@ class OrderResource extends Resource
                 TextColumn::make('grand_total')
                     ->label(__('form.grand_total'))
                     ->money('USD')
-                    ->formatStateUsing(fn ($state) => App::getLocale() === 'ar' ? $state . ' دولار' : '$' . $state)
+                    ->formatStateUsing(fn($state) => App::getLocale() === 'ar' ? $state . ' دولار' : '$' . $state)
                     ->size(TextColumn\TextColumnSize::Medium),
-
-                TextColumn::make('payment_method')
-                    ->label(__('form.payment_method'))
-                    ->formatStateUsing(fn (string $state): string => __("form.{$state}"))
-                    ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('payment_status')
-                    ->label(__('form.payment_status'))
-                    ->formatStateUsing(fn (string $state): string => __("status.{$state}"))
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'failed' => 'danger',
-                        'paid' => 'success',
-                    })
-                    ->searchable()
-                    ->sortable(),
+                TextColumn::make('currency')
+                    ->label(__('form.currency')),
+                TextColumn::make('currency_price')
+                    ->label(__('form.currency_price')),
 
                 SelectColumn::make('status')
                     ->label(__('form.status'))
@@ -250,7 +211,8 @@ class OrderResource extends Resource
         ];
     }
 
-    public static function getNavigationBadge(): ?string{
+    public static function getNavigationBadge(): ?string
+    {
         return static::getModel()::where('status', 'new')->count();
     }
 

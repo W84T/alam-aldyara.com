@@ -51,6 +51,23 @@ class Discount extends Model
                 Log::warning('No categories found in request.');
             }
         });
+
+        static::updating(function ($discount) {
+            if ($discount->isDirty('is_active')) {
+                Log::info("Updating related products for discount: {$discount->id}, is_active: {$discount->is_active}");
+
+                // Fetch related products and update pivot table
+                $discount->products()->syncWithoutDetaching(
+                    $discount->products->pluck('id')->mapWithKeys(function ($productId) use ($discount) {
+                        return [$productId => ['is_active' => $discount->is_active]];
+                    })->toArray()
+                );
+
+                Log::info("Related discount products updated to is_active: {$discount->is_active}");
+            }
+        });
+
+
     }
 
 
