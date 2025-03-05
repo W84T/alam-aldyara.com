@@ -39,5 +39,11 @@ return [
     'basket_summary' => 'سلة المشتريات',
     'quantity' => 'الكمية',
     'shipping_address' =>'عنوان الشحن',
-
+    'thanks' => 'شكراً لك, تم استلام طلبك',
+    'order_number' => 'رقم الطلب',
+    'date' => 'التاريخ',
+    'order_details' => 'تفاصيل الطلب',
+    'back_shopping' => 'العودة للتسوق',
+    'my_orders' => 'كل الطلبات',
+    'details' => 'التفاصيل'
 ];

@@ -59,7 +59,7 @@
                             <label class="block text-gray-700 dark:text-white mb-1" for="city">
                                 {{__('form.city')}}
                             </label>
-                            <input wrie:model="city"
+                            <input wire:model="city"
                                    class="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
                                    id="city" type="text">
                             @error('city')
@@ -109,10 +109,10 @@
                     </div>
                     <div class="flex justify-between mb-2 font-bold">
 					<span>
-						{{__('front.taxes')}}
+                            {{__('front.taxes')}}
 					</span>
                         <span>
-						{{Number::currency(0 , $currency)}}
+                            {{Number::currency(0 , $currency)}}
 					</span>
                     </div>
                     <div class="flex justify-between mb-2 font-bold">

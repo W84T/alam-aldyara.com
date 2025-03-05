@@ -69,4 +69,5 @@ return [
     'end_date' => 'تاريح الإنتهاء',
     'products' => 'منتجات',
     'categories' => 'فئات',
+    'action' => 'الإجرائات',
 ];

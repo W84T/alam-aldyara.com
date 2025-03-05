@@ -30,9 +30,9 @@ class CheckoutPage extends Component
     public function mount()
     {
         $cart_items = CartManagement::getCartItemsFromCookie();
-        if(count($cart_items) == 0) {
-            return redirect()->route('/products');
-        }
+//        if(count($cart_items) == 0) {
+//            return redirect()->route('/products');
+//        }
             // Get currency from cookie
         $this->currency = Cookie::get('currency', 'USD');
 
@@ -58,6 +58,7 @@ class CheckoutPage extends Component
             'phone' => 'required',
             'address' => 'required',
             'state' => 'required',
+            'city' => 'required',
             'zip_code' => 'required',
         ]);
 

@@ -32,4 +32,5 @@ return [
     'banner' => 'Banner',
     'discount' => 'Discount',
     'discounts' => 'Discounts',
+    'order_details' => 'Order Details',
 ];

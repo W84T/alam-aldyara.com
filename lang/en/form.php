@@ -70,4 +70,5 @@ return [
     'end_date' => 'End Date',
     'products' => 'Products',
     'categories' => 'Categories',
+    'action' => 'Action',
 ];

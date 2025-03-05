@@ -30,4 +30,5 @@ return [
     'banners' => 'بانرات',
     'discount' => 'تخفيض',
     'discounts' => 'تخفيضات',
+    'order_details' => 'تفاصيل الطلب'
 ];
