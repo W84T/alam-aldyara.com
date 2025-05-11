@@ -6,13 +6,13 @@
                     <div class="swiper-slide !h-[30rem] rounded-xl overflow-hidden">
                         <div class="flex lg:flex-row flex-col h-full">
                             <div class="bg-[#f7f7f7] lg:w-1/3 flex flex-col items-center justify-center p-6">
-                                <img class="!max-w-[250px]" src="{{url('storage', $banner->image)}}"
-                                     alt="{{$banner->title}}">
+                                <img class="!max-w-[250px]" src="{{ asset('storage/' . $banner->image) }}" alt="{{ $banner->title }}">
+
                                 <h1 class="text-2xl font-bold mt-4">{{$banner->title}}</h1>
                                 <p class="font-lighter text-center">{{$banner->description}}</p>
                             </div>
                             <div class="lg:w-2/3">
-                                <img class="h-full w-full object-cover" src="{{url('storage', $banner->hero_image)}}"
+                                <img class="h-full w-full object-cover" src="{{asset('storage/' . $banner->hero_image)}}"
                                      alt="{{$banner->title}}">
                             </div>
 
